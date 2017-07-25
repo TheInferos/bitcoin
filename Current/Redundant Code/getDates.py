@@ -6,7 +6,7 @@ def getBlockHash(bkNumber):
     return res.json()["blockHash"]
 
 def parseInfo():
-    f = open("Docs/BlockTimes", "r+")
+    f = open("Docs/BlockTimes.txt", "r+")
     list =f.read().split("\n")
     f.close()
     if len(list) != 0:
@@ -32,7 +32,7 @@ def main():
 
     lastBlock = parseInfo()
     lastBlock = 1 + int(lastBlock)
-    f = open("Docs/BlockTimes", "a")
+    f = open("Docs/BlockTimes.txt", "a")
     bkHash = getBlockHash(lastBlock)
     height, time, nextHash = requestInfo(bkHash)
     writeTimes(f, height, time)
