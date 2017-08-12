@@ -12,7 +12,7 @@ if occurance != []:
     for i in occurance:
         message += i + " "
     if len(occurance) == 1:
-        amount = " transaction hash "
+        amount = " hash "
     else:
-        amount = " transaction hashes "
+        amount = " hashes "
     print("There is an occurance between " + address1 +" and " + address2 + " at trancation " + amount + message)
