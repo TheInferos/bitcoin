@@ -1,13 +1,19 @@
 import os
 
+def nameHandle(name):
+    named = passNamedAdds()
+    addrs = lookupName(name,named)
+    return addrs
+
 def passNamedAdds():
     names = {}
     f = open("Docs/NamedAddresses.txt", "r")
     lines = f.read().split("\n")
     for i in range(len(lines)):
         if lines[i] != "":
-            row = lines[i].split()
-            names [row[0]] = row[1]
+            row = lines[i].split(" ")
+            #print (row[0], row[1])
+            names[row[0]] = row[1]
     f.close()
     return (names)
 
@@ -27,8 +33,9 @@ def addToDict(address, name, dict):
     updatSavedDict()
 
 
-def lookupName(address, names):
-    if address in names:
-        return names[address]
+def lookupName(name, names):
+    if name in names:
+        return names[name]
     else:
-        return address
+        return []
+

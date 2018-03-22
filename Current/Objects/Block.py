@@ -1,4 +1,4 @@
-from bitcoin.Current.Objects import Address
+import Address
 class Block:
     def __init__(self, blockID ):
         self.blockID = blockID

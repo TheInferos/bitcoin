@@ -9,26 +9,28 @@ def ShadowAddressCluster(address):
         if transReq["vout"] > 1: # if there is more than one output
             tempAd = "" # check before
             firstInstances = 0 #
-            for i in (transReq["vout"]): # loop through the outputs
-                addr = i["scriptPubKey"]["addresses"][0] # get the output address
-                tempreq = requests.get("https://test-insight.bitpay.com/api/addr/" + str(addr)).json() # get the new addresses tranaction list
-                if str(tempreq["transactions"][-1]) == str(xtion): # if this was the first transaction it was involved in
-                    tempAd += str(addr)
-                    firstInstances += 1
+            for i in (transReq["vout"]): # loop through the o   utputs
+                if "addresses" in i["scriptPubKey"]:
+                    addr = i["scriptPubKey"]["addresses"][0] # get the output address
+                    print addr
+                    tempreq = requests.get("https://test-insight.bitpay.com/api/addr/" + str(addr)).json() # get the new addresses tranaction list
+                    if "transactions" in tempreq:
+                        print tempreq["transactions"]
+                        if str(tempreq["transactions"][-1]) == str(xtion): # if this was the first transaction it was involved in
+                            tempAd += str(addr)
+                            firstInstances += 1
             if firstInstances == 1:
                 addresses.append(tempAd)
-    print addresses
-
-
-def multiaddress(address):
-    addresses = []
-    req = requests.get("https://test-insight.bitpay.com/api/addr/" + str(address)).json()
-    for trans in req["transactions"]:
-        transReq = requests.get("https://test-insight.bitpay.com/api/tx/" + str(trans)).json()
-        if len(transReq["vin"]) > 1:
-            for transDetails in transReq["vin"]:
-                addresses.append(transDetails["addr"])
-    print addresses
+    cluster = []
+    for addr in addresses:
+        req = requests.get("https://test-insight.bitpay.com/api/addr/" + str(addr)).json()
+        trans = req["transactions"]
+        trans = trans [-1]
+        req = requests.get("https://test-insight.bitpay.com/api/tx/" + str(trans)).json() # get the transaction details
+        for i in req["vin"]:
+            cluster.append(str(i["addr"]))
+        cluster.append(addr)
+    return (cluster)
 
 
 def addAddresses(addresses, code):
@@ -40,18 +42,6 @@ def addAddresses(addresses, code):
     return message
 
 
+#print(ShadowAddressCluster("moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe"))
+#2N6TtLayzyLr6B764arv1UGGLfTpic2cWZN and 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF
 
-
-
-
-
-
-
-
-
-
-
-
-#multiaddress("2N6TtLayzyLr6B764arv1UGGLfTpic2cWZN")
-ShadowAddressCluster("moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe")
-#2N6TtLayzyLr6B764arv1UGGLfTpic2cWZN and  2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF

@@ -27,4 +27,4 @@ def saveAddress(address1, address2, certainty):
     if address1 != []:
         pass
     
-lookUpAddress("2N672VWCiPhob46jEVrpohd47Xqg7koufug")
+#lookUpAddress("2N672VWCiPhob46jEVrpohd47Xqg7koufug")

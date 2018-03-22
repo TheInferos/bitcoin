@@ -1,6 +1,6 @@
-from bitcoin.Current.Objects import Address
-from bitcoin.Current.Objects import Block
-from bitcoin.Current.Objects import Transaction
+from Objects import Address
+from Objects import Block
+from Objects import Transaction
 
 def searchSetup(searchBy, searchMaterial):
     if searchBy == "blockId":

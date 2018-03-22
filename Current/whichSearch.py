@@ -14,7 +14,7 @@ def checkSearch(testData):
             textInput = "Address"
             enter = False
         else:
-            print (testData)
+            #print (testData)
             print ("please try again length not found to match criteria")
             testData = input("Please insert a blockID (5 digits), Transaction Hash (16 Digits or an Address(12 digits) \n")
         return testData, textInput
