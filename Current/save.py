@@ -15,14 +15,17 @@ def writeMessage(message,fileName):
         FullWrite = ""
         messadded = False
         for line in splits:
-            if line[0:35] == message[0:35]:
-                print "3 " + message
+            firstLine = line.split(" ")
+            firstMessage = message.split(" ")
+            if firstLine[0] == firstMessage[0]:
+                #print "3 " + message
                 FullWrite += message + "\n"
                 messadded = True
             else:
                 FullWrite += line + "\n"
         if messadded == False:
             FullWrite += message
+        print(FullWrite[-4])
         f.write(FullWrite)
     else:
         f.write(message)
@@ -35,7 +38,6 @@ def getFileName(addr):
 def makeMessage(makesaddresses,currentAddress):
     message = currentAddress
     address = checkIfExisting(makesaddresses, currentAddress)
-    print address
     for addrs in address:
         if addrs != currentAddress:
             message += " " + addrs
@@ -59,7 +61,15 @@ def checkIfExisting(addresses,currentAddress):
                 return addresses
     return addresses
 
+def addAddresses(addresses, code):
+    for addr1 in addresses:
+        message = str(addr1) + " "
+        for addr2 in addresses:
+            if addr1 != addr2:
+                 message += addr2 + " " + code + " "
+    return message
 
-#address = ["abcdjfgh","bcdfghi", "bcdfghj"]
-#writeMessage(makeMessage(address, address[0]),getFileName(address[0]))
-#handle(address)
+def moduleTest():
+    address = ["abcdefghijklmnopqrstuvwxyz123456789","abcdefghijklmnopqrstuvwxyz123456788", "abcdefghijklmnopqrstuvwxyz123456787", "9bcdefghijklmnopqrstuvwxyz12345678a"]
+    handle(address)
+moduleTest()

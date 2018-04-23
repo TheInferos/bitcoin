@@ -1,24 +1,27 @@
 import requests
 
-
 def ShadowAddressCluster(address):
     addresses = []
     req = requests.get("https://test-insight.bitpay.com/api/addr/" + str(address)).json() # get address details
     for xtion in req["transactions"]: # loop through transaction list
         transReq = requests.get("https://test-insight.bitpay.com/api/tx/" + str(xtion)).json() # get the transaction details
         if transReq["vout"] > 1: # if there is more than one output
-            tempAd = "" # check before
+            tempAd = ""# check before
             firstInstances = 0 #
-            for i in (transReq["vout"]): # loop through the o   utputs
-                if "addresses" in i["scriptPubKey"]:
-                    addr = i["scriptPubKey"]["addresses"][0] # get the output address
-                    print addr
-                    tempreq = requests.get("https://test-insight.bitpay.com/api/addr/" + str(addr)).json() # get the new addresses tranaction list
-                    if "transactions" in tempreq:
-                        print tempreq["transactions"]
-                        if str(tempreq["transactions"][-1]) == str(xtion): # if this was the first transaction it was involved in
-                            tempAd += str(addr)
-                            firstInstances += 1
+            addsIn = []
+            for transDetails in transReq["vin"]:
+                addsIn.append(str(transDetails["addr"]))
+            if address in addsIn or xtion ==req["transactions"][-1]:
+                for i in (transReq["vout"]): # loop through the outputs
+                    if "addresses" in i["scriptPubKey"]:
+                        addr = i["scriptPubKey"]["addresses"][0] # get the output address
+                        #print addr
+                        tempreq = requests.get("https://test-insight.bitpay.com/api/addr/" + str(addr)).json() # get the new addresses tranaction list
+                        if "transactions" in tempreq:
+                            #print tempreq["transactions"]
+                            if str(tempreq["transactions"][-1]) == str(xtion): # if this was the first transaction it was involved in
+                                tempAd += str(addr)
+                                firstInstances += 1
             if firstInstances == 1:
                 addresses.append(tempAd)
     cluster = []
@@ -32,16 +35,14 @@ def ShadowAddressCluster(address):
         cluster.append(addr)
     return (cluster)
 
-
-def addAddresses(addresses, code):
-    for addr1 in addresses:
-        message = str(addr1) + " "
-        for addr2 in addresses:
-            if addr1 != addr2:
-                 message += addr2 + " " + code + " "
-    return message
-
-
-#print(ShadowAddressCluster("moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe"))
+def exampleTest():
+    print ("Shadow change Test: address 'moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe'")
+    print ("expected values 'moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe' and 'muAe6MxM9RerQSj4535SxAtXetR5tpzia8' date:Feb1")
+    print(ShadowAddressCluster("moydwVNxX2tsb2Q3aPvWLnAPgZ7t3dNQSe"))
+def firstTest():
+    print ("Shadow change Test: address '2NCK8ZuhZCjZeQ68U4pRWsPrAUH2rSwerE2'")
+    print ("expected values '2NCK8ZuhZCjZeQ68U4pRWsPrAUH2rSwerE2' and '2N4CEmvB2pawBWKNA3wWwELWNMohtRkgi44' date: Apr14")
+    print(ShadowAddressCluster("2NCK8ZuhZCjZeQ68U4pRWsPrAUH2rSwerE2"))
 #2N6TtLayzyLr6B764arv1UGGLfTpic2cWZN and 2N8hwP1WmJrFF5QWABn38y63uYLhnJYJYTF
+#firstTest()
 

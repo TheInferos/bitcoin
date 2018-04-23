@@ -21,5 +21,11 @@ def blocksInRange(dRange):
             block = res["blocks"][i]["hash"]
             dayHashes.append(block)
         blocksByDay.append(dayHashes)
+    return blocksByDay
+
+
 
 # Test case dRange =dateRange(2012, 5, 1, 2012, 5, 16)
+drange = dateRange(2012, 5, 1, 2012, 5, 16)
+rang = blocksInRange(drange)
+print len(rang[0]), rang

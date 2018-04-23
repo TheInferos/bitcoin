@@ -13,7 +13,7 @@ def simpleCompare(addr1Hash, addr2Hash):
     occurance = []
     for transx in shorter.tx:
         if transx in compAddr.tx:
-            occurance.append(transx)
+            occurance.append(str(transx))
     return occurance
 
 def listCompare(list1, list2):
@@ -42,9 +42,24 @@ def listCompare(list1, list2):
     occurance = []
     for transx in shorter:
         if transx in compAddr:
-            occurance.append(transx)
+            occurance.append(str(transx))
     return occurance
 
+def simpleTest():
+    print "Simple compare test"
+    print "Expected value: 'c29434ad307c7aa0258d1a85f8cc9cec2d064239350eb4d4e96a4ede090812ce' test October 17"
+    print simpleCompare("n2BAtxE3FgRPkCbDQbh2WymEwqUCiPB9B7", "2N672VWCiPhob46jEVrpohd47Xqg7koufug")
+    print "No Occurance Check Expected Value []"
+    print simpleCompare("n2BAtxE3FgRPkCbDQbh2WymEwqUCiPB9B7", "muh7aXhqSc3FDTG7nkyamS4AFSxcL4gWAF")
 
-#print (simpleCompare("n2BAtxE3FgRPkCbDQbh2WymEwqUCiPB9B7", "2N672VWCiPhob46jEVrpohd47Xqg7koufug"))
-#print(listCompare(["n2BAtxE3FgRPkCbDQbh2WymEwqUCiPB9B7"], ["2N672VWCiPhob46jEVrpohd47Xqg7koufug"]))
+
+def listTest():
+    print "list compare test"
+    print "expected Value  'c29434ad307c7aa0258d1a85f8cc9cec2d064239350eb4d4e96a4ede090812ce' October17"
+    print(listCompare(["n2BAtxE3FgRPkCbDQbh2WymEwqUCiPB9B7"], ["2N672VWCiPhob46jEVrpohd47Xqg7koufug"]))
+    print "List Compare (no connection)"
+    print(listCompare(["muh7aXhqSc3FDTG7nkyamS4AFSxcL4gWAF"], ["2N672VWCiPhob46jEVrpohd47Xqg7koufug"]))
+
+
+#listTest()
+#simpleTest()
